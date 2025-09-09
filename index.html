@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Xgreen • Sábado Livre</title>
+<style>
+:root{
+  --bg:#05080c; --card:#0c121b; --ink:#eaf2ff; --muted:#a5b3c8;
+  --accent:#00e676; --accent2:#1de9b6; --danger:#ff6b6b; --border:#16243a; --radius:18px
+}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:radial-gradient(1200px 800px at 18% -10%, #0d1522 0%, #08101a 55%, var(--bg) 100%) fixed;color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+.wrap{max-width:1000px;margin:0 auto;padding:18px}
+header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px}
+h1{margin:0;font-size:clamp(1.1rem,4vw,1.5rem)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:120px;height:32px;object-fit:contain;border-radius:6px;background:#000;border:1px solid var(--border);padding:4px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+button,.chip{background:var(--card);border:1px solid var(--border);color:var(--ink);padding:10px 14px;border-radius:12px;font-weight:600;cursor:pointer}
+button:hover{transform:translateY(-1px);border-color:#2a3c5e}
+.grid{display:grid;gap:16px;grid-template-columns:1fr}@media(min-width:940px){.grid{grid-template-columns:1.7fr .9fr}}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%),var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.scene-title{margin:0 0 6px;font-size:1.15rem}
+.scene-img{width:100%;border-radius:12px;border:1px solid var(--border);margin:8px 0 10px;display:none;object-fit:cover;max-height:280px}
+.scene-text{line-height:1.6}
+.choices{display:grid;gap:8px;margin-top:12px}
+.choice{background:#0a1220;border:1px solid var(--border);padding:12px 14px;border-radius:12px;text-align:left;font-weight:700;cursor:pointer}
+.choice[disabled]{opacity:.55;cursor:not-allowed}
+.muted{color:var(--muted)}
+.statbar{display:grid;gap:8px;margin:10px 0}
+.bar{background:#0a1220;border:1px solid var(--border);border-radius:999px;overflow:hidden;position:relative;height:10px}
+.fill{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.bad .fill{background:linear-gradient(90deg,var(--danger),#ffa07a)}
+.statline{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted)}
+.inv{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:#0a1422}
+.footer{margin-top:12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}
+.notif{position:fixed;right:16px;bottom:80px;background:#0e1a29;border:1px solid #25334b;padding:12px 14px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:none;max-width:320px}
+.cta{position:fixed;left:16px;bottom:16px;right:16px;display:flex;justify-content:center;z-index:5}
+.cta a{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#02130b;border:none;border-radius:999px;padding:12px 18px;font-weight:800;text-decoration:none;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <img alt="Xgreen logo"
+        src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="80" viewBox="0 0 300 80"><rect width="300" height="80" fill="black"/><g fill="white"><text x="20" y="55" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="700" letter-spacing="1">xgreen</text></g></svg>'>
+      <h1 id="brand-title">Xgreen • Sábado Livre</h1>
+    </div>
+    <div class="toolbar">
+      <button id="btn-back">⟵ Voltar</button>
+      <button id="btn-reset">🗘 Resetar</button>
+      <button id="btn-pt">PT</button>
+      <button id="btn-en">EN</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <main class="card">
+      <div class="statbar">
+        <div class="statline"><span>Energia</span><span id="v-energia">65</span></div>
+        <div class="bar"><div id="b-energia" class="fill" style="width:65%"></div></div>
+        <div class="statline"><span>Produtividade</span><span id="v-produtividade">50</span></div>
+        <div class="bar"><div id="b-produtividade" class="fill" style="width:50%"></div></div>
+        <div class="statline"><span>Família</span><span id="v-familia">48</span></div>
+        <div class="bar"><div id="b-familia" class="fill" style="width:48%"></div></div>
+      </div>
+
+      <h2 id="scene-title" class="scene-title"></h2>
+      <img id="scene-img" class="scene-img" alt="">
+      <p id="scene-text" class="scene-text"></p>
+
+      <div id="choices" class="choices"></div>
+
+      <div class="footer">
+        <span id="state-info" class="muted"></span>
+        <span class="muted">Progresso salvo automaticamente</span>
+      </div>
+    </main>
+
+    <aside class="card">
+      <h3>Serviços Xgreen</h3>
+      <div id="svc" class="inv"></div>
+      <p class="muted">Agende e veja os indicadores subirem.</p>
+      <h3>Itens & Destraváveis</h3>
+      <div id="inv" class="inv"></div>
+    </aside>
+  </div>
+</div>
+
+<div class="cta">
+  <a id="cta" href="https://wa.me/5521999999999?text=Quero%20Xgreen" target="_blank">💬 Fale com Vendas · Xgreen</a>
+</div>
+<div id="toast" class="notif"></div>
+
+<script>
+/* Simplificado: 1 cena só de exemplo */
+const STORIES={PT:{start:{id:"start",title:"Segunda-feira na Vila Olímpia",text:"Você chega cansado. O RH avisa: a empresa ativou Xgreen. Quer abrir o app?",img:"https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600&auto=format&fit=crop",choices:[{text:"Abrir app",to:"fim"}]},fim:{id:"fim",title:"Agendamento Confirmado",text:"Limpeza marcada! Seu sábado está livre para o Ibirapuera com a família.",img:"https://images.unsplash.com/photo-1598300187398-3b7fb1bdb5f6?q=80&w=1600&auto=format&fit=crop",choices:[{text:"Recomeçar",to:"reset!"}]}}};
+let state={scene:"start",energia:65,produtividade:50,familia:48,history:[],inventory:[]};
+function renderScene(id){let s=STORIES.PT[id];state.scene=id;document.getElementById("scene-title").innerHTML=s.title;document.getElementById("scene-text").innerHTML=s.text;if(s.img){document.getElementById("scene-img").src=s.img;document.getElementById("scene-img").style.display="block";}document.getElementById("choices").innerHTML="";s.choices.forEach(c=>{let b=document.createElement("button");b.className="choice";b.innerHTML=c.text;b.onclick=()=>{if(c.to==="reset!"){renderScene("start");return}renderScene(c.to)};document.getElementById("choices").appendChild(b)});}
+renderScene("start");
+</script>
+</body>
+</html>
