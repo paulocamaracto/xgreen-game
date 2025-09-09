@@ -4,62 +4,77 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Xgreen • Sábado Livre</title>
+<meta name="description" content="Jogo web interativo: agende serviços Xgreen (Limpeza, Cuidador, Personal) e veja o impacto no trabalho e na família.">
 <style>
-:root{
-  --bg:#05080c; --card:#0c121b; --ink:#eaf2ff; --muted:#a5b3c8;
-  --accent:#00e676; --accent2:#1de9b6; --danger:#ff6b6b; --border:#16243a; --radius:18px
-}
-*{box-sizing:border-box}html,body{height:100%}
-body{margin:0;background:radial-gradient(1200px 800px at 18% -10%, #0d1522 0%, #08101a 55%, var(--bg) 100%) fixed;color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
-.wrap{max-width:1000px;margin:0 auto;padding:18px}
-header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px}
-h1{margin:0;font-size:clamp(1.1rem,4vw,1.5rem)}
-.brand{display:flex;align-items:center;gap:10px}
-.brand img{width:120px;height:32px;object-fit:contain;border-radius:6px;background:#000;border:1px solid var(--border);padding:4px}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap}
-button,.chip{background:var(--card);border:1px solid var(--border);color:var(--ink);padding:10px 14px;border-radius:12px;font-weight:600;cursor:pointer}
-button:hover{transform:translateY(-1px);border-color:#2a3c5e}
-.grid{display:grid;gap:16px;grid-template-columns:1fr}@media(min-width:940px){.grid{grid-template-columns:1.7fr .9fr}}
-.card{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%),var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
-.scene-title{margin:0 0 6px;font-size:1.15rem}
-.scene-img{width:100%;border-radius:12px;border:1px solid var(--border);margin:8px 0 10px;display:none;object-fit:cover;max-height:280px}
-.scene-text{line-height:1.6}
-.choices{display:grid;gap:8px;margin-top:12px}
-.choice{background:#0a1220;border:1px solid var(--border);padding:12px 14px;border-radius:12px;text-align:left;font-weight:700;cursor:pointer}
-.choice[disabled]{opacity:.55;cursor:not-allowed}
-.muted{color:var(--muted)}
-.statbar{display:grid;gap:8px;margin:10px 0}
-.bar{background:#0a1220;border:1px solid var(--border);border-radius:999px;overflow:hidden;position:relative;height:10px}
-.fill{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
-.bad .fill{background:linear-gradient(90deg,var(--danger),#ffa07a)}
-.statline{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted)}
-.inv{display:flex;gap:8px;flex-wrap:wrap}
-.chip{background:#0a1422}
-.footer{margin-top:12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}
-.notif{position:fixed;right:16px;bottom:80px;background:#0e1a29;border:1px solid #25334b;padding:12px 14px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:none;max-width:320px}
-.cta{position:fixed;left:16px;bottom:16px;right:16px;display:flex;justify-content:center;z-index:5}
-.cta a{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#02130b;border:none;border-radius:999px;padding:12px 18px;font-weight:800;text-decoration:none;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+  :root{
+    --bg:#05080c; --card:#0c121b; --ink:#eaf2ff; --muted:#a5b3c8;
+    --accent:#00e676; --accent2:#1de9b6; --danger:#ff6b6b; --border:#16243a; --radius:18px
+  }
+  *{box-sizing:border-box} html,body{height:100%}
+  body{
+    margin:0;
+    background:radial-gradient(1200px 800px at 18% -10%, #0d1522 0%, #08101a 55%, var(--bg) 100%) fixed;
+    color:var(--ink); font-family:Inter,system-ui,Segoe UI,Roboto,Arial
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:18px}
+  header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px}
+  h1{margin:0;font-size:clamp(1.1rem,4vw,1.5rem);letter-spacing:.2px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:120px;height:32px;object-fit:contain;border-radius:6px;background:#000;border:1px solid var(--border);padding:4px}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap}
+  button,.chip{
+    background:var(--card); border:1px solid var(--border); color:var(--ink);
+    padding:10px 14px; border-radius:12px; font-weight:600; cursor:pointer; transition:.15s
+  }
+  button:hover{transform:translateY(-1px); border-color:#2a3c5e}
+  .grid{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:940px){.grid{grid-template-columns:1.7fr .9fr}}
+  .card{
+    background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%),var(--card);
+    border:1px solid var(--border); border-radius:var(--radius); padding:16px
+  }
+  .scene-title{margin:0 0 6px;font-size:1.15rem}
+  .scene-img{width:100%;border-radius:12px;border:1px solid var(--border);margin:8px 0 10px;display:none;object-fit:cover;max-height:280px}
+  .scene-text{line-height:1.6}
+  .choices{display:grid;gap:8px;margin-top:12px}
+  .choice{background:#0a1220;border:1px solid var(--border);padding:12px 14px;border-radius:12px;text-align:left;font-weight:700;cursor:pointer}
+  .choice[disabled]{opacity:.55;cursor:not-allowed}
+  .muted{color:var(--muted)}
+  .statbar{display:grid;gap:8px;margin:10px 0}
+  .bar{background:#0a1220;border:1px solid var(--border);border-radius:999px;overflow:hidden;position:relative;height:10px}
+  .fill{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  .bad .fill{background:linear-gradient(90deg,var(--danger),#ffa07a)}
+  .statline{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted)}
+  .inv{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:#0a1422}
+  .footer{margin-top:12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}
+  .notif{position:fixed;right:16px;bottom:80px;background:#0e1a29;border:1px solid #25334b;padding:12px 14px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:none;max-width:320px}
+  a{color:var(--accent2);text-decoration:none} a:hover{text-decoration:underline}
+  .tag{font-size:.8rem;background:#102235;border:1px solid #233652;padding:4px 8px;border-radius:999px;color:#cfe6ff}
+  .cta{position:fixed;left:16px;bottom:16px;right:16px;display:flex;justify-content:center;z-index:5}
+  .cta a{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#02130b;border:none;border-radius:999px;padding:12px 18px;font-weight:800;text-decoration:none;box-shadow:0 12px 30px rgba(0,0,0,.35)}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
+  <header aria-label="Cabeçalho">
     <div class="brand">
-      <img alt="Xgreen logo"
-        src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="80" viewBox="0 0 300 80"><rect width="300" height="80" fill="black"/><g fill="white"><text x="20" y="55" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="700" letter-spacing="1">xgreen</text></g></svg>'>
+      <!-- Logo Xgreen embutida -->
+      <img id="brand-logo" alt="Logo Xgreen"
+        src='data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8"?> <svg xmlns="http://www.w3.org/2000/svg" width="300" height="80" viewBox="0 0 300 80"><rect width="300" height="80" fill="black"/><g fill="white"><text x="20" y="55" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="700" letter-spacing="1">xgreen</text></g></svg>'>
       <h1 id="brand-title">Xgreen • Sábado Livre</h1>
     </div>
-    <div class="toolbar">
+    <div class="toolbar" role="group" aria-label="Ferramentas">
       <button id="btn-back">⟵ Voltar</button>
       <button id="btn-reset">🗘 Resetar</button>
-      <button id="btn-pt">PT</button>
+      <button id="btn-pt" aria-pressed="true">PT</button>
       <button id="btn-en">EN</button>
     </div>
   </header>
 
   <div class="grid">
-    <main class="card">
-      <div class="statbar">
+    <main class="card" aria-live="polite">
+      <div class="statbar" aria-label="Indicadores">
         <div class="statline"><span>Energia</span><span id="v-energia">65</span></div>
         <div class="bar"><div id="b-energia" class="fill" style="width:65%"></div></div>
         <div class="statline"><span>Produtividade</span><span id="v-produtividade">50</span></div>
@@ -72,6 +87,10 @@ button:hover{transform:translateY(-1px);border-color:#2a3c5e}
       <img id="scene-img" class="scene-img" alt="">
       <p id="scene-text" class="scene-text"></p>
 
+      <div id="requirements" class="muted" style="display:none;margin-top:6px;">
+        <span class="tag">Requer: <span id="req-list"></span></span>
+      </div>
+
       <div id="choices" class="choices"></div>
 
       <div class="footer">
@@ -81,26 +100,402 @@ button:hover{transform:translateY(-1px);border-color:#2a3c5e}
     </main>
 
     <aside class="card">
-      <h3>Serviços Xgreen</h3>
+      <h3 style="margin:0 0 8px;">Serviços Xgreen</h3>
       <div id="svc" class="inv"></div>
-      <p class="muted">Agende e veja os indicadores subirem.</p>
-      <h3>Itens & Destraváveis</h3>
+      <p class="muted" style="margin:10px 0 14px;">
+        Clique para agendar: você recebe uma notificação e os indicadores sobem. <b>Foque em Limpeza</b> para liberar o sábado.
+      </p>
+      <h3 style="margin:0 0 8px;">Itens & Destraváveis</h3>
       <div id="inv" class="inv"></div>
+      <hr style="opacity:.35;margin:14px 0;border-color:#213049">
+      <p class="muted" style="margin:0;"><b>Dica:</b> combine Limpeza + Personal para um boost de foco na sprint.</p>
     </aside>
   </div>
 </div>
 
+<!-- CTA fixo -->
 <div class="cta">
-  <a id="cta" href="https://wa.me/5521999999999?text=Quero%20Xgreen" target="_blank">💬 Fale com Vendas · Xgreen</a>
+  <a id="cta" href="#" target="_blank" rel="noopener">💬 Fale com Vendas · Xgreen</a>
 </div>
-<div id="toast" class="notif"></div>
+
+<div id="toast" class="notif" role="status" aria-live="polite"></div>
 
 <script>
-/* Simplificado: 1 cena só de exemplo */
-const STORIES={PT:{start:{id:"start",title:"Segunda-feira na Vila Olímpia",text:"Você chega cansado. O RH avisa: a empresa ativou Xgreen. Quer abrir o app?",img:"https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600&auto=format&fit=crop",choices:[{text:"Abrir app",to:"fim"}]},fim:{id:"fim",title:"Agendamento Confirmado",text:"Limpeza marcada! Seu sábado está livre para o Ibirapuera com a família.",img:"https://images.unsplash.com/photo-1598300187398-3b7fb1bdb5f6?q=80&w=1600&auto=format&fit=crop",choices:[{text:"Recomeçar",to:"reset!"}]}}};
-let state={scene:"start",energia:65,produtividade:50,familia:48,history:[],inventory:[]};
-function renderScene(id){let s=STORIES.PT[id];state.scene=id;document.getElementById("scene-title").innerHTML=s.title;document.getElementById("scene-text").innerHTML=s.text;if(s.img){document.getElementById("scene-img").src=s.img;document.getElementById("scene-img").style.display="block";}document.getElementById("choices").innerHTML="";s.choices.forEach(c=>{let b=document.createElement("button");b.className="choice";b.innerHTML=c.text;b.onclick=()=>{if(c.to==="reset!"){renderScene("start");return}renderScene(c.to)};document.getElementById("choices").appendChild(b)});}
-renderScene("start");
+/* ========= Config de CTA ========= */
+const SALES = {
+  phone: "", // 🔁 coloque "5511999999999" para WhatsApp (DDI+DDD+número); deixe vazio para e-mail
+  email: "mailto:sales@xgreen.app?subject=Quero%20Xgreen&body=Oi%2C%20tenho%20interesse%20no%20benef%C3%ADcio%20Xgreen%20na%20minha%20empresa.",
+  utm: "utm_source=game&utm_medium=cta&utm_campaign=xgreen_b2b_demo",
+  labelPT: "💬 Fale com Vendas · Xgreen",
+  labelEN: "💬 Talk to Sales · Xgreen"
+};
+function buildCtaHref(){
+  if (SALES.phone) return `https://wa.me/${SALES.phone}?text=${encodeURIComponent("Quero levar Xgreen para minha empresa")}&${SALES.utm}`;
+  return `${SALES.email}&${SALES.utm}`;
+}
+const cta = document.getElementById("cta");
+cta.href = buildCtaHref();
+
+/* ========= Catálogo de serviços ========= */
+const SERVICES = [
+  { id:"limpeza",     labelPT:"Limpeza Residencial", labelEN:"Home Cleaning",   tag:"🌿", eff:{energia:+22, produtividade:+12, familia:+18} },
+  { id:"cuidador",    labelPT:"Cuidador de Idosos",  labelEN:"Elder Care",      tag:"🤝", eff:{energia:+10, produtividade:+6,  familia:+12} },
+  { id:"personal",    labelPT:"Personal Trainer",    labelEN:"Personal Trainer",tag:"💪", eff:{energia:+12, produtividade:+9,  familia:+6} },
+  { id:"pet",         labelPT:"Pet Walker",          labelEN:"Dog Walker",      tag:"🐾", eff:{energia:+8,  produtividade:+5,  familia:+7} },
+  { id:"passadeira",  labelPT:"Passadeira de Roupas",labelEN:"Laundry/Ironing", tag:"🧺", eff:{energia:+10, produtividade:+6,  familia:+5} },
+];
+
+/* ========= Histórias (PT completo + EN demo) ========= */
+const STORIES = {
+  PT: {
+    start:{id:"start", title:"Segunda, Brooklin · Linha 5-Lilás, fone no ouvido.",
+      text:"Rafael chega ao escritório na Vila Olímpia com olheiras. Inbox lotado. Ping do RH: <b>“A empresa ativou os benefícios Xgreen.”</b> Ele fica confuso, mas curioso.",
+      img:"https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600&auto=format&fit=crop",
+      gain:["app-xgreen","badge-onboarding"],
+      choices:[
+        {text:"Abrir o e-mail do RH", to:"email"},
+        {text:"Ignorar e ir direto para a daily", to:"daily"}
+      ]
+    },
+    email:{id:"email", title:"RH · Xgreen chegou",
+      text:"“Pare de gastar seu sábado com faxina.” No app Xgreen você agenda <b>Limpeza</b>, <b>Cuidador</b>, <b>Personal</b> e mais — tudo via benefício corporativo. Comece pela limpeza para sentir o impacto.",
+      img:"https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=1600&auto=format&fit=crop",
+      choices:[
+        {text:"Abrir o app Xgreen", to:"app", need:["app-xgreen"]},
+        {text:"Responder ‘vejo depois’ e entrar na daily", to:"daily"}
+      ]
+    },
+    daily:{id:"daily", title:"Daily da sprint · Mariana (chefe) conduz",
+      text:"‘Pessoal, precisamos fechar o protótipo do onboarding até sexta.’ Rafael respira fundo: o fim de semana de faxina cobrou a conta.",
+      img:"https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1600&auto=format&fit=crop",
+      choices:[
+        {text:"Pedir 10 min depois da daily para planejar semana no app", to:"app"},
+        {text:"Tocar direto o PR mais crítico", to:"flow-warm"}
+      ]
+    },
+    app:{id:"app", title:"Catálogo Xgreen (SP)",
+      text:"Interface limpa. Destaque: <b>Limpeza residencial</b> com janela sábado 9h (Brooklin). ‘Se eu agendar, ganho meu sábado de volta.’",
+      img:"https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop",
+      gain:["app-aberto"],
+      choices:[
+        {text:"Agendar Limpeza sábado 9h", to:"agendou-limpeza"},
+        {text:"Explorar outros serviços", to:"explorar"}
+      ]
+    },
+    "agendou-limpeza":{id:"agendou-limpeza", title:"Agendamento Confirmado",
+      text:"Notificação: <b>Limpeza agendada com sucesso</b>. Seu sábado abriu! Um sorriso escapa.",
+      img:"https://images.unsplash.com/photo-1598300187398-3b7fb1bdb5f6?q=80&w=1600&auto=format&fit=crop",
+      gain:["limpeza-agendada","notificacao","badge-first-booking"],
+      choices:[
+        {text:"Mandar no grupo da família: ‘Parque Ibirapuera no sábado?’", to:"familia1"},
+        {text:"Voltar animado para a sprint", to:"flow-warm"}
+      ]
+    },
+    familia1:{id:"familia1", title:"Grupo Família · SP",
+      text:"‘Sábado livre! Parque + pastel?’ Resposta instantânea: <i>‘Partiu!’</i> Um peso sai das costas.",
+      img:"https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"Entrar no foco do dia", to:"flow-warm"}]
+    },
+    "flow-warm":{id:"flow-warm", title:"Entrando no ritmo",
+      text:"Com sábado garantido, a mente destrava. Rafael abre o PR crítico com calma e clareza.",
+      img:"https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop",
+      choices:[
+        {text:"Fechar PR e alinhar com Mariana", to:"reuniao1"},
+        {text:"Passar no app e agendar Personal 7h (quarta)", to:"agendou-personal"}
+      ]
+    },
+    reuniao1:{id:"reuniao1", title:"1:1 com Mariana",
+      text:"‘Hoje você está afiado, Rafa. Bora mostrar isso no review.’ Ele percebe: não estar exausto muda tudo.",
+      img:"https://images.unsplash.com/photo-1525182008055-f88b95ff7980?q=80&w=1600&auto=format&fit=crop",
+      choices:[
+        {text:"Planejar a semana no app", to:"app"},
+        {text:"Explorar serviços para sua mãe (cuidador)", to:"explorar"}
+      ]
+    },
+    explorar:{id:"explorar", title:"Explorar catálogo",
+      text:"Além de Limpeza: <b>Cuidador</b> para Dona Lúcia (domingo 14h), <b>Personal</b>, <b>Pet Walker</b> e <b>Passadeira</b>.",
+      img:"https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=1600&auto=format&fit=crop",
+      choices:[
+        {text:"Agendar Cuidador (domingo 14h)", to:"agendou-cuidador"},
+        {text:"Agendar Personal (quarta 7h)", to:"agendou-personal"},
+        {text:"Agendar Passadeira (sexta 19h)", to:"agendou-passadeira"},
+        {text:"Voltar", to:"app"}
+      ]
+    },
+    "agendou-personal":{id:"agendou-personal", title:"Personal confirmado",
+      text:"Notificação: <b>Treino quarta 7h</b>. Até o sono melhora.",
+      img:"https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1600&auto=format&fit=crop",
+      gain:["personal-agendado","notificacao"],
+      choices:[
+        {text:"Voltar aos projetos (flow)", to:"flow1"},
+        {text:"Ver catálogo de novo", to:"explorar"}
+      ]
+    },
+    "agendou-cuidador":{id:"agendou-cuidador", title:"Cuidador confirmado",
+      text:"Notificação: <b>Cuidador para Dona Lúcia</b>. Mensagem da mãe: ‘Filho, obrigada. Isso ajuda demais.’",
+      img:"https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1600&auto=format&fit=crop",
+      gain:["cuidador-agendado","notificacao"],
+      choices:[
+        {text:"Trabalhar com tranquilidade", to:"flow1"},
+        {text:"Ver catálogo de novo", to:"explorar"}
+      ]
+    },
+    "agendou-passadeira":{id:"agendou-passadeira", title:"Passadeira confirmada",
+      text:"Notificação: <b>Roupas resolvidas</b>. Segunda com menos fricção.",
+      img:"https://images.unsplash.com/photo-1540914124281-342587941389?q=80&w=1600&auto=format&fit=crop",
+      gain:["passadeira-agendada","notificacao"],
+      choices:[
+        {text:"Voltar aos projetos", to:"flow1"},
+        {text:"Ver catálogo de novo", to:"explorar"}
+      ]
+    },
+    flow1:{id:"flow1", title:"Estado de Flow · Review da sprint",
+      text:"Rafael fecha o protótipo. Mariana: ‘<i>É isso!</i> Coloca seu nome na apresentação.’",
+      img:"https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1600&auto=format&fit=crop",
+      choices:[
+        {text:"Encerrar o dia com checklist limpo", to:"final-bom"},
+        {text:"Mais uma passada no backlog e caprichar no deck", to:"final-melhor"}
+      ]
+    },
+    "final-bom":{id:"final-bom", title:"Final · Sábado Livre em SP",
+      text:"Sábado 9h: equipe de limpeza chega ao Brooklin. Rafael vai ao Ibirapuera com a família. À noite, mensagem de Mariana: <b>‘Entrega impecável.’</b>",
+      img:"https://images.unsplash.com/photo-1467810563316-b5476525c0f9?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"Recomeçar", to:"reset!"}]
+    },
+    "final-melhor":{id:"final-melhor", title:"Final · Novo ciclo",
+      text:"Com o ritmo Xgreen, energia, foco e presença entram no automático. Vida & trabalho em sincronia.",
+      img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"Recomeçar", to:"reset!"}]
+    }
+  },
+  EN: {
+    start:{id:"start", title:"Monday, São Paulo",
+      text:"Rafael gets to the office tired. HR email: <b>“Your company activated Xgreen benefits.”</b>",
+      img:"https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600&auto=format&fit=crop",
+      gain:["app-xgreen"],
+      choices:[{text:"Open HR email", to:"email"},{text:"Join daily stand-up", to:"daily"}]
+    },
+    email:{id:"email", title:"HR · Xgreen",
+      text:"Book <b>Home Cleaning</b>, <b>Elder Care</b>, <b>Personal Trainer</b> with your company benefit. Start with Cleaning to feel the impact.",
+      img:"https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"Open Xgreen app", to:"app", need:["app-xgreen"]},{text:"Later", to:"daily"}]
+    },
+    daily:{id:"daily", title:"Daily stand-up",
+      text:"‘We must close the onboarding prototype by Friday.’ The weekend chores took a toll.",
+      img:"https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"Plan the week in the app", to:"app"},{text:"Open the critical PR", to:"flow-warm"}]
+    },
+    app:{id:"app", title:"Xgreen Catalog",
+      text:"Highlight: <b>Home Cleaning</b> Saturday 9am (Brooklin).",
+      img:"https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop",
+      gain:["app-aberto"],
+      choices:[{text:"Book Cleaning Sat 9am", to:"agendou-limpeza"},{text:"Explore services", to:"explorar"}]
+    },
+    "agendou-limpeza":{id:"agendou-limpeza", title:"Booked!",
+      text:"Notification: <b>Cleaning scheduled successfully.</b> Saturday is yours.",
+      img:"https://images.unsplash.com/photo-1598300187398-3b7fb1bdb5f6?q=80&w=1600&auto=format&fit=crop",
+      gain:["limpeza-agendada","notificacao"],
+      choices:[{text:"Text family: ‘Ibirapuera on Sat?’", to:"familia1"},{text:"Back to sprint", to:"flow-warm"}]
+    },
+    familia1:{id:"familia1", title:"Family group",
+      text:"‘Free Saturday! Park + snacks?’ Reply: <i>‘Let’s go!’</i>",
+      img:"https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"Focus time", to:"flow-warm"}]
+    },
+    "flow-warm":{id:"flow-warm", title:"Warming up",
+      text:"With Saturday free, mind unlocks. He opens the critical PR calmly.",
+      img:"https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"Finish PR and sync with manager", to:"reuniao1"},{text:"Book Personal Wed 7am", to:"agendou-personal"}]
+    },
+    reuniao1:{id:"reuniao1", title:"1:1",
+      text:"‘You’re sharp today.’ Rest matters.",
+      img:"https://images.unsplash.com/photo-1525182008055-f88b95ff7980?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"Plan the week in the app", to:"app"},{text:"Explore Elder Care", to:"explorar"}]
+    },
+    explorar:{id:"explorar", title:"Explore",
+      text:"Elder Care for Mom (Sun 2pm), Personal, Dog Walker, Laundry.",
+      img:"https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"Book Elder Care", to:"agendou-cuidador"},{text:"Book Personal", to:"agendou-personal"},{text:"Book Laundry", to:"agendou-passadeira"},{text:"Back", to:"app"}]
+    },
+    "agendou-personal":{id:"agendou-personal", title:"Trainer set",
+      text:"Notification: <b>Workout booked.</b> Sleep improves.",
+      img:"https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1600&auto=format&fit=crop",
+      gain:["personal-agendado","notificacao"],
+      choices:[{text:"Back to projects", to:"flow1"},{text:"Explore again", to:"explorar"}]
+    },
+    "agendou-cuidador":{id:"agendou-cuidador", title:"Care arranged",
+      text:"Notification: <b>Elder care scheduled.</b> Mom: ‘Thank you.’",
+      img:"https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1600&auto=format&fit=crop",
+      gain:["cuidador-agendado","notificacao"],
+      choices:[{text:"Work with peace of mind", to:"flow1"},{text:"Explore again", to:"explorar"}]
+    },
+    "agendou-passadeira":{id:"agendou-passadeira", title:"Laundry done",
+      text:"Notification: <b>Wardrobe rescued.</b>",
+      img:"https://images.unsplash.com/photo-1540914124281-342587941389?q=80&w=1600&auto=format&fit=crop",
+      gain:["passadeira-agendada","notificacao"],
+      choices:[{text:"Back to projects", to:"flow1"},{text:"Explore again", to:"explorar"}]
+    },
+    flow1:{id:"flow1", title:"Flow & review",
+      text:"Prototype closed. Manager: ‘<i>That’s it!</i> Put your name on the deck.’",
+      img:"https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"End day clean", to:"final-bom"},{text:"Polish the deck", to:"final-melhor"}]
+    },
+    "final-bom":{id:"final-bom", title:"Ending · Free Saturday",
+      text:"Cleaners arrive in Brooklin. Family day at Ibirapuera. Praise at night.",
+      img:"https://images.unsplash.com/photo-1467810563316-b5476525c0f9?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"Restart", to:"reset!"}]
+    },
+    "final-melhor":{id:"final-melhor", title:"Ending · New cycle",
+      text:"Energy, focus and presence in sync. Life & work aligned.",
+      img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop",
+      choices:[{text:"Restart", to:"reset!"}]
+    }
+  }
+};
+
+/* ========= Estado & motor ========= */
+const LS_KEY="xgreen_game_full";
+const $=(s)=>document.querySelector(s);
+const elTitle=$("#scene-title"), elText=$("#scene-text"), elImg=$("#scene-img");
+const elChoices=$("#choices"), elReq=$("#requirements"), elReqList=$("#req-list");
+const elInv=$("#inv"), elSvc=$("#svc"); const toast=$("#toast");
+const bE=$("#b-energia"), bP=$("#b-produtividade"), bF=$("#b-familia");
+const vE=$("#v-energia"), vP=$("#v-produtividade"), vF=$("#v-familia");
+const btnBack=$("#btn-back"), btnReset=$("#btn-reset"), btnPT=$("#btn-pt"), btnEN=$("#btn-en");
+let lang="PT";
+let state=load()||{scene:"start",inventory:[],history:[],energia:65,produtividade:50,familia:48};
+
+function load(){try{return JSON.parse(localStorage.getItem(LS_KEY));}catch{return null;}}
+function save(){localStorage.setItem(LS_KEY,JSON.stringify(state));}
+function clamp(n,min=0,max=100){return Math.max(min,Math.min(max,n));}
+function stat(delta){const {energia=0,produtividade=0,familia=0}=delta||{};
+  state.energia=clamp(state.energia+energia);
+  state.produtividade=clamp(state.produtividade+produtividade);
+  state.familia=clamp(state.familia+familia);
+  renderStats();
+}
+function renderStats(){
+  bE.style.width=state.energia+"%"; vE.textContent=state.energia;
+  bP.style.width=state.produtividade+"%"; vP.textContent=state.produtividade;
+  bF.style.width=state.familia+"%"; vF.textContent=state.familia;
+  bE.parentElement.classList.toggle("bad",state.energia<35);
+  bP.parentElement.classList.toggle("bad",state.produtividade<35);
+  bF.parentElement.classList.toggle("bad",state.familia<35);
+}
+function uniq(a){return [...new Set(a)];}
+function hasAll(need=[],inv=[]){return need.every(it=>inv.includes(it));}
+
+function gainItems(scene){
+  if(scene.gain?.length){ state.inventory = uniq([...state.inventory, ...scene.gain]); }
+}
+
+function renderInventory(){
+  elInv.innerHTML="";
+  if(!state.inventory.length){
+    const s=document.createElement("span"); s.className="muted"; s.textContent="— vazio —"; elInv.appendChild(s); return;
+  }
+  state.inventory.forEach(it=>{
+    const chip=document.createElement("span"); chip.className="chip"; chip.textContent=it.replaceAll("-"," ");
+    elInv.appendChild(chip);
+  });
+}
+
+function showToast(html, seconds=3){
+  toast.innerHTML=html; toast.style.display="block";
+  setTimeout(()=>toast.style.display="none", seconds*1000);
+}
+
+function renderServices(){
+  elSvc.innerHTML="";
+  SERVICES.forEach(s=>{
+    const btn=document.createElement("button");
+    btn.className="chip";
+    btn.title=(lang==="PT"?s.labelPT:s.labelEN);
+    btn.innerHTML=`${s.tag} ${(lang==="PT"?s.labelPT:s.labelEN)}`;
+    btn.onclick=()=>{
+      stat(s.eff);
+      state.inventory = uniq([...state.inventory, s.id+"-agendado"]);
+      save();
+      const msg=lang==="PT"
+        ? `<b>${s.labelPT}</b> agendado com sucesso.`
+        : `<b>${s.labelEN}</b> booked successfully.`;
+      showToast(msg + "<br><span class='muted'>Você receberá lembrete automático.</span>", 3.2);
+    };
+    elSvc.appendChild(btn);
+  });
+}
+
+function renderScene(id, pushHistory=true){
+  const bundle = STORIES[lang] || STORIES.PT;
+  let scene = bundle[id] || bundle["start"];
+  if(pushHistory && state.scene!==id) state.history.push(state.scene);
+  state.scene = scene.id;
+
+  gainItems(scene);
+
+  elTitle.innerHTML = scene.title || "";
+  elText.innerHTML = scene.text || "";
+  if(scene.img){
+    elImg.src=scene.img; elImg.alt=scene.title||"Cena"; elImg.style.display="block";
+  } else { elImg.style.display="none"; }
+
+  // requisitos visuais (se quiser usar em futuras cenas)
+  const need = scene.need || [];
+  if(need.length && !hasAll(need, state.inventory)){
+    elReq.style.display="block"; elReqList.textContent = need.join(", ");
+  } else { elReq.style.display="none"; }
+
+  // escolhas
+  elChoices.innerHTML="";
+  (scene.choices || []).forEach(ch=>{
+    const disabled = ch.need && !hasAll(ch.need, state.inventory);
+    const btn = document.createElement("button");
+    btn.className="choice"; btn.disabled=!!disabled;
+    btn.innerHTML = disabled
+      ? `${ch.text} <span class="muted">• requer: ${ch.need.join(", ")}</span>`
+      : ch.text;
+    btn.onclick=()=>{
+      if(ch.to==="reset!"){ reset(); return; }
+      // efeitos narrativos por progresso
+      if(ch.to==="agendou-limpeza") stat({energia:+22, produtividade:+12, familia:+18});
+      if(ch.to==="familia1")        stat({familia:+10});
+      if(ch.to==="flow-warm")       stat({produtividade:+6});
+      if(ch.to==="reuniao1")        stat({produtividade:+8});
+      if(ch.to==="flow1")           stat({energia:+5, produtividade:+10});
+      if(ch.to.startsWith("final")) stat({familia:+5});
+      renderScene(ch.to);
+      save();
+    };
+    elChoices.appendChild(btn);
+  });
+
+  renderStats();
+  renderInventory();
+  document.getElementById("state-info").textContent =
+    `Cena: ${state.scene} • Itens: ${state.inventory.length}`;
+  save();
+}
+
+function back(){ if(!state.history.length) return; const prev=state.history.pop(); renderScene(prev,false); save(); }
+function reset(){ state={scene:"start",inventory:[],history:[],energia:65,produtividade:50,familia:48}; save(); renderScene(state.scene,false); }
+
+/* Botões & idioma */
+document.getElementById("btn-back").onclick=back;
+document.getElementById("btn-reset").onclick=reset;
+document.getElementById("btn-pt").onclick=()=>{ lang="PT"; document.getElementById("brand-title").textContent="Xgreen • Sábado Livre"; cta.textContent=SALES.labelPT; cta.href=buildCtaHref(); renderServices(); renderScene(state.scene,false); };
+document.getElementById("btn-en").onclick=()=>{ lang="EN"; document.getElementById("brand-title").textContent="Xgreen • Free Your Saturday"; cta.textContent=SALES.labelEN; cta.href=buildCtaHref(); renderServices(); renderScene(state.scene,false); };
+
+/* Atalhos teclado */
+window.addEventListener("keydown",(e)=>{
+  const n=parseInt(e.key,10); const options=[...document.querySelectorAll(".choice")];
+  if(!isNaN(n)&&n>=1&&n<=options.length) options[n-1].click();
+  if(e.key==="Escape") document.getElementById("btn-back").click();
+  if(e.key.toLowerCase()==="r") document.getElementById("btn-reset").click();
+});
+
+/* Iniciar */
+renderServices();
+renderScene(state.scene,false);
 </script>
 </body>
 </html>
